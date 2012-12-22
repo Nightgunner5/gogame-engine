@@ -2,6 +2,7 @@ package tile
 
 // Each Tile has a game-specific meaning.
 type Tile uint16
+
 var _ TileDef = Tile(0)
 
 func (t Tile) Pass(ts TileSet) bool {

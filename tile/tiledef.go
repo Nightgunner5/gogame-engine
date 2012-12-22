@@ -11,7 +11,8 @@ type TileDef interface {
 	Light(TileSet) uint8
 }
 
-type noopTileDef struct {}
+type noopTileDef struct{}
+
 func (noopTileDef) Pass(TileSet) bool {
 	return true
 }

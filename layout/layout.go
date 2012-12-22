@@ -5,10 +5,10 @@ import (
 )
 
 type Layout struct {
-	base    map[tile.Coord]tile.MultiTile
-	changes map[tile.Coord]tile.MultiTile
+	base    map[Coord]tile.MultiTile
+	changes map[Coord]tile.MultiTile
 }
 
 func (l Layout) Set() {
-	
+
 }
