@@ -1,10 +1,10 @@
 package tile
 
-type MultiTile []Tile
+type Multi []Tile
 
-var _ TileDef = MultiTile{}
+var _ Def = Multi{}
 
-func (m MultiTile) Pass(ts TileSet) bool {
+func (m Multi) Pass(ts Set) bool {
 	for _, t := range m {
 		if !t.Pass(ts) {
 			return false
@@ -13,7 +13,7 @@ func (m MultiTile) Pass(ts TileSet) bool {
 	return true
 }
 
-func (m MultiTile) See(ts TileSet) bool {
+func (m Multi) See(ts Set) bool {
 	for _, t := range m {
 		if !t.See(ts) {
 			return false
@@ -22,7 +22,7 @@ func (m MultiTile) See(ts TileSet) bool {
 	return true
 }
 
-func (m MultiTile) Light(ts TileSet) uint8 {
+func (m Multi) Light(ts Set) uint8 {
 	var light uint8
 	for _, t := range m {
 		l := t.Light(ts)
@@ -35,7 +35,7 @@ func (m MultiTile) Light(ts TileSet) uint8 {
 	return light
 }
 
-func (m MultiTile) Equal(other MultiTile) bool {
+func (m Multi) Equal(other Multi) bool {
 	if len(m) != len(other) {
 		return false
 	}

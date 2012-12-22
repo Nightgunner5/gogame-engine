@@ -7,21 +7,21 @@ import (
 )
 
 type Layout struct {
-	tset    tile.TileSet
-	base    map[Coord]tile.MultiTile
-	changes map[Coord]tile.MultiTile
+	tset    tile.Set
+	base    map[Coord]tile.Multi
+	changes map[Coord]tile.Multi
 	sync.RWMutex
 }
 
-func NewLayout(ts tile.TileSet) *Layout {
+func NewLayout(ts tile.Set) *Layout {
 	return &Layout{
 		tset:    ts,
-		base:    make(map[Coord]tile.MultiTile),
-		changes: make(map[Coord]tile.MultiTile),
+		base:    make(map[Coord]tile.Multi),
+		changes: make(map[Coord]tile.Multi),
 	}
 }
 
-func (l *Layout) Get(c Coord) tile.MultiTile {
+func (l *Layout) Get(c Coord) tile.Multi {
 	l.RLock()
 	if t, ok := l.changes[c]; ok {
 		l.RUnlock()
@@ -32,7 +32,7 @@ func (l *Layout) Get(c Coord) tile.MultiTile {
 	return t
 }
 
-func (l *Layout) Set(c Coord, t tile.MultiTile) (old tile.MultiTile) {
+func (l *Layout) Set(c Coord, t tile.Multi) (old tile.Multi) {
 	for {
 		old := l.Get(c)
 		if l.Swap(c, old, t) {
@@ -42,7 +42,7 @@ func (l *Layout) Set(c Coord, t tile.MultiTile) (old tile.MultiTile) {
 	panic("unreachable")
 }
 
-func (l *Layout) Swap(c Coord, old, t tile.MultiTile) bool {
+func (l *Layout) Swap(c Coord, old, t tile.Multi) bool {
 	l.Lock()
 	if t1, ok := l.changes[c]; ok {
 		if old.Equal(t1) {
@@ -65,7 +65,7 @@ func (l *Layout) Swap(c Coord, old, t tile.MultiTile) bool {
 
 type Tile struct {
 	Coord
-	tile.MultiTile
+	tile.Multi
 }
 
 type sortTile []Tile
@@ -106,7 +106,7 @@ func (l *Layout) InOrder() []Tile {
 	return []Tile(sorted)
 }
 
-func (l *Layout) ForAll(f func(Coord, tile.MultiTile)) {
+func (l *Layout) ForAll(f func(Coord, tile.Multi)) {
 	l.RLock()
 
 	for c, t := range l.base {
