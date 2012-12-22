@@ -34,3 +34,15 @@ func (m MultiTile) Light(ts TileSet) uint8 {
 	}
 	return light
 }
+
+func (m MultiTile) Equal(other MultiTile) bool {
+	if len(m) != len(other) {
+		return false
+	}
+	for i := range m {
+		if m[i] != other[i] {
+			return false
+		}
+	}
+	return true
+}
