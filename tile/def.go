@@ -13,6 +13,8 @@ type Def interface {
 
 type noopDef struct{}
 
+var _ Def = noopDef{}
+
 func (noopDef) Pass(Set) bool {
 	return true
 }
