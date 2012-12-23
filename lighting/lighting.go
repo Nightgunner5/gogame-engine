@@ -3,6 +3,7 @@ package lighting
 import (
 	"github.com/Nightgunner5/gogame-engine/layout"
 	"github.com/Nightgunner5/gogame-engine/tile"
+	"math"
 	"sync"
 )
 
