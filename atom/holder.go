@@ -20,6 +20,10 @@ func (h *holder) initialize() {
 }
 
 func (h *holder) Hold(a Atom) bool {
+	if a == nil {
+		return false
+	}
+
 	h.Lock()
 	for _, b := range h.held {
 		if a == b {
@@ -33,6 +37,10 @@ func (h *holder) Hold(a Atom) bool {
 }
 
 func (h *holder) Drop(a Atom) bool {
+	if a == nil {
+		return false
+	}
+
 	h.Lock()
 	for i, b := range h.held {
 		if a == b {
