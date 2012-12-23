@@ -1,19 +1,9 @@
-// Package atom provides the base for all objects in the Go Game Engine. Atoms are self-contained and communicate by sending signals to other atoms.
+// Package atom provides the base for all objects in the Go Game Engine. Atoms
+// are self-contained and communicate by sending signals to other atoms.
 package atom
 
 import "fmt"
 
-/*
-
-	type MyAtom struct {
-		atom.Atom
-	}
-
-	a := &MyAtom{
-		Atom: atom.New(),
-	}
-
-*/
 type Atom interface {
 	Send(Signal)
 	HandleSignal(Signal)

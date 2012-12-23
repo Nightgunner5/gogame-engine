@@ -28,6 +28,14 @@ func (l *Lighting) At(c layout.Coord) uint8 {
 	return b
 }
 
+var brightnessMap [256]uint8
+
+func init() {
+	for i := range brightnessMap {
+		brightnessMap[i] = uint8(math.Sqrt(float64(i))*2.5) + 2
+	}
+}
+
 func (l *Lighting) spread(c layout.Coord, b uint8) {
 	if 255-l.bright[c] < b {
 		l.bright[c] = 255
@@ -39,7 +47,7 @@ func (l *Lighting) spread(c layout.Coord, b uint8) {
 		return
 	}
 
-	const loss = 10
+	var loss = brightnessMap[b]
 	if b < loss {
 		return
 	}
