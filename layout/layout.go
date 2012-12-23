@@ -67,6 +67,20 @@ func (l *Layout) Swap(c Coord, old, t tile.Multi) bool {
 	return false
 }
 
+func (l *Layout) Commit() {
+	l.Lock()
+	for c, t := range l.changes {
+		if len(t) == 0 {
+			delete(l.base, c)
+		} else {
+			l.base[c] = t
+		}
+	}
+	l.changes = make(map[Coord]tile.Multi)
+	l.version++
+	l.Unlock()
+}
+
 type Tile struct {
 	Coord
 	tile.Multi

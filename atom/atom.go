@@ -57,3 +57,7 @@ func (a *atom) dispatch(top Atom) {
 func Init(a Atom) {
 	go a.atom().dispatch(a)
 }
+
+func Close(a Atom) {
+	close(a.atom().signals)
+}
