@@ -1,7 +1,19 @@
+// Package atom provides the base for all objects in the Go Game Engine. Atoms are self-contained and communicate by sending signals to other atoms.
 package atom
 
 import "fmt"
 
+/*
+
+	type MyAtom struct {
+		atom.Atom
+	}
+
+	a := &MyAtom{
+		Atom: atom.New(),
+	}
+
+*/
 type Atom interface {
 	Send(Signal)
 	HandleSignal(Signal)
@@ -16,12 +28,9 @@ func (a *atom) initialize() {
 	a.signals = make(chan Signal)
 }
 
-func NewAtom(a Atom) Atom {
-	if a == nil {
-		a_ := new(atom)
-		a_.initialize()
-		a = a_
-	}
+func New() Atom {
+	a := new(atom)
+	a.initialize()
 	return a
 }
 

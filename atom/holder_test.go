@@ -5,10 +5,10 @@ import (
 )
 
 func TestHolder(t *testing.T) {
-	toAdd := NewAtom(nil)
+	toAdd := New()
 	// No init as toAdd is never sent any signals
 
-	h := NewHolder(nil)
+	h := NewHolder()
 
 	count := 0
 	h.EachHeld(func(a Atom) {

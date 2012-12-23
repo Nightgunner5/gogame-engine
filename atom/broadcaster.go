@@ -19,12 +19,9 @@ func (b *broadcaster) initialize() {
 	b.subscribers = make(map[Kind]map[chan<- Signal]bool)
 }
 
-func NewBroadcaster(b Broadcaster) Broadcaster {
-	if b == nil {
-		b_ := new(broadcaster)
-		b_.initialize()
-		b = b_
-	}
+func NewBroadcaster() Broadcaster {
+	b := new(broadcaster)
+	b.initialize()
 	return b
 }
 

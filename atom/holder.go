@@ -19,6 +19,12 @@ type holder struct {
 func (h *holder) initialize() {
 }
 
+func NewHolder() Holder {
+	h := new(holder)
+	h.initialize()
+	return h
+}
+
 func (h *holder) Hold(a Atom) bool {
 	if a == nil {
 		return false
@@ -59,13 +65,4 @@ func (h *holder) EachHeld(f func(Atom)) {
 		f(a)
 	}
 	h.Unlock()
-}
-
-func NewHolder(h Holder) Holder {
-	if h == nil {
-		h_ := new(holder)
-		h_.initialize()
-		h = h_
-	}
-	return h
 }
