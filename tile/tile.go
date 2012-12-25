@@ -16,3 +16,7 @@ func (t Tile) See(ts Set) bool {
 func (t Tile) Light(ts Set) uint8 {
 	return ts.Get(t).Light(ts)
 }
+
+func (t Tile) Type(ts Set) Type {
+	return ts.Get(t).Type(ts)
+}

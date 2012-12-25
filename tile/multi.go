@@ -35,6 +35,11 @@ func (m Multi) Light(ts Set) uint8 {
 	return light
 }
 
+// Returns the Type of the Tile with the highest index in this slice.
+func (m Multi) Type(ts Set) Type {
+	return m[len(m)-1].Type(ts)
+}
+
 func (m Multi) Equal(other Multi) bool {
 	if len(m) != len(other) {
 		return false
