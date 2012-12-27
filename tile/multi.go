@@ -2,7 +2,7 @@ package tile
 
 type Multi []Tile
 
-var _ Def = Multi{}
+var _ Def = Multi(nil)
 
 func (m Multi) Pass(ts Set) bool {
 	for _, t := range m {
