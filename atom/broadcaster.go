@@ -15,14 +15,10 @@ type broadcaster struct {
 	sync.RWMutex
 }
 
-func (b *broadcaster) initialize() {
-	b.subscribers = make(map[Kind]map[chan<- Signal]bool)
-}
-
 func NewBroadcaster() Broadcaster {
-	b := new(broadcaster)
-	b.initialize()
-	return b
+	return &broadcaster{
+		subscribers: make(map[Kind]map[chan<- Signal]bool),
+	}
 }
 
 func (b *broadcaster) Broadcast(s Signal) (count int) {

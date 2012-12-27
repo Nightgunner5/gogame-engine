@@ -16,13 +16,8 @@ type holder struct {
 	sync.Mutex
 }
 
-func (h *holder) initialize() {
-}
-
 func NewHolder() Holder {
-	h := new(holder)
-	h.initialize()
-	return h
+	return new(holder)
 }
 
 func (h *holder) Hold(a Atom) bool {

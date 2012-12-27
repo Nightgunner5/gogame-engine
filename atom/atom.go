@@ -4,6 +4,15 @@ package atom
 
 import "fmt"
 
+// for testing
+var kindTestSignal = NewKind("testSignal")
+
+type testSignal chan Kind
+
+func (testSignal) Kind() Kind {
+	return kindTestSignal
+}
+
 type Atom interface {
 	Send(Signal)
 	HandleSignal(Signal)
@@ -14,17 +23,15 @@ type atom struct {
 	signals chan Signal
 }
 
-func (a *atom) initialize() {
-	a.signals = make(chan Signal)
-}
-
 func New() Atom {
-	a := new(atom)
-	a.initialize()
-	return a
+	return new(atom)
 }
 
 func (a *atom) Send(s Signal) {
+	if a.signals == nil {
+		panic("atom: Send on uninitialized Atom is illegal.")
+	}
+
 	defer func() {
 		recover()
 	}()
@@ -33,6 +40,12 @@ func (a *atom) Send(s Signal) {
 }
 
 func (a *atom) HandleSignal(s Signal) {
+	// for testing
+	if t, ok := s.(testSignal); ok {
+		t <- s.Kind()
+		return
+	}
+
 	// atom doesn't have any signal types on its own.
 	panic(fmt.Errorf("Unhandled Signal of type %T", s))
 }
@@ -54,6 +67,7 @@ func (a *atom) dispatch(top Atom) {
 }
 
 func Init(a Atom) {
+	a.atom().signals = make(chan Signal)
 	go a.atom().dispatch(a)
 }
 
